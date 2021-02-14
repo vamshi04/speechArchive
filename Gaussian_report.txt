@@ -1,0 +1,17 @@
+Gaussian Clasiffier:
+\Word Classification Report
+
+              precision    recall  f1-score   support
+
+           0       0.00      1.00      0.00         1
+           1       1.00      0.81      0.90      6384
+
+    accuracy                           0.81      6385
+   macro avg       0.50      0.91      0.45      6385
+weighted avg       1.00      0.81      0.90      6385
+
+
+Confusion Matrix
+
+[[   1    0]
+ [1183 5201]]

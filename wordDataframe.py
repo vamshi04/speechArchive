@@ -3,11 +3,9 @@ from transcribe import wordTimeOffsets
 import pandas as pd
 from google.cloud import speech_v1p1beta1 as speech
 # word_np = np.array() # size = (max(repetation of a word)) x (no. of words)
+from pathlib import Path
 
 # word_np 
-
-global_df = pd.DataFrame()
-missingFiles = []
 
 class WordInfo:
     
@@ -16,22 +14,25 @@ class WordInfo:
         self.missingFiles = missingFiles
         
     
-    def wordDf(self, filename):
-        speech_file = Path("/home/vamshi/project/SpeechArchive/recordings/wav/" + filename + ".wav")
+    def wordDf(self, filename, phrases):
+        speech_file = Path("/home/malkaiv/project/final/recordings/wav/" + str(filename) + ".wav")
+        # print("in here")
         if speech_file.exists ():
-            response = wordTimeOffsets(selffilename)
-            temp = 0
+            response = wordTimeOffsets(filename, phrases, 0)
+            # temp = 0
             word_dict = addWordDict(response, filename)
-
+            # print(word_dict)
             if self.global_df.empty:
-                print("empty")
+                # print("empty: ")
                 self.global_df = pd.DataFrame.from_dict(word_dict, orient='index')
                 self.global_df = self.global_df.transpose()
             else:
+                # print("not empty: ")
                 self.global_df.head()
                 temp = pd.DataFrame.from_dict(word_dict, orient='index')
                 temp = temp.transpose()
                 self.global_df = pd.concat([self.global_df,temp], axis=0, ignore_index=True)
+                # print(self.global_df.head())
         else:
             self.missingFiles.append(filename)
             
@@ -48,7 +49,4 @@ class WordInfo:
             temp = temp.transpose()
             self.global_df = pd.concat([self.global_df,temp], axis=0, ignore_index=True)
         return self.global_df
-# Word_Class = Word_Info()
-
-Word_Class = Word_Info(global_df, missingFiles)
 
